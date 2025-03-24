@@ -1,0 +1,144 @@
+<div class="row mt-3">
+    <div class="col-7">
+        <h6>Products</h6>
+    </div>
+    <div class="col-5 text-end">
+        <button class="btn btn-warning "  (click)="openModal()">AddNewProduct</button>
+    </div>
+        
+</div>
+<div class="row mt-3  ">
+    <div class="col-4"  *ngFor="let item of productList ">
+        <div class="card shadow-sm mb-3" >
+            <div *ngIf="!item.thumbnailImageUrl || item.thumbnailImageUrl.trim() === ''; else imageBlock">
+                <svg class="bd-placeholder-img card-img-top" style="width:100%; height:200px"
+                     xmlns="http://www.w3.org/2000/svg" role="img" 
+                     aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" 
+                     focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                </svg>
+            </div>
+            
+            <ng-template #imageBlock >
+                <div class="text-center mt-3">
+                    <img [src]="item.thumbnailImageUrl"
+                         (error)="item.thumbnailImageUrl = null" 
+                         style="width:250px; height:200px" 
+                         alt="Product image">
+                </div>
+            </ng-template>
+            
+            
+            
+            
+            <ng-template #imageBlock>
+            <div class="text-center">
+            <img   [src]="item.thumbnailImageUrl"  style="width:250px;height:200px" alt="image">
+        </div>
+        </ng-template>
+
+        
+           
+            <div class="card-body">
+              <p class="card-text"><span class="text-success-emphasis fw-bold">Mobile Name:</span>{{item.productName}}</p>
+              <div class="row">
+                  <div class="col-6">
+                      <span class="text-success fw-bold">Category:</span>{{item.category}}
+                  </div>
+                  <div class="col-6">
+                  <span class="text-danger fw-bold">Price:</span>{{item.price}}
+                  </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-success w-20" (click)="editmethod(item)">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(item.productId)">Delete</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+<!-- The Modal -->
+<div class="modal"  #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">New  Product</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closemodal()"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+         <form  [formGroup]="registerForm" (ngSubmit)="postdata()">
+            <div class="row">
+                <!-- <div class="col-6">
+                    <label for="productId" class="form-label">productId</label>
+                    <input type="number"   class="form-control"  formControlName="productId" placeholder="enteryourproductId"/>
+                </div> -->
+                <div class="col-6">
+                    <label for="productName" class="form-label">productName</label>
+                    <input type="text"   class="form-control"  formControlName="productName" placeholder="enteryourproductName"/>
+                </div>
+                <div class="col-6">
+                    <label for="shortName" class="form-label">shortName</label>
+                    <input type="text"   class="form-control"  formControlName="shortName" placeholder="enteryourshortName"/>
+                </div>
+                <div class="col-6">
+                    <label for="category" class="form-label">category</label>
+                    <select class="form-select"  formControlName="category">
+                        <option value="">..select category..</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="iphone">Iphone</option>
+                        <option value="nokia">Nokia</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="sku" class="form-label">sku</label>
+                    <input type="text"   class="form-control"  formControlName="sku" placeholder="enteryoursku"/>
+                </div>
+                <div class="col-6">
+                    <label for="price" class="form-label">price</label>
+                    <input type="text"   class="form-control"  formControlName="price" placeholder="enteryourprice"/>
+                </div>
+                <div class="col-6">
+                    <label for="thumbnailImageUrl" class="form-label">Image</label>
+                    <input type="text"   class="form-control"  formControlName="thumbnailImageUrl" placeholder="enteryourimageurl"/>
+                </div>
+                <div class="col-6">
+                    <label for="deliveryTimeSpan" class="form-label">deliveryTimeSpan</label>
+                    <select class="form-select"  formControlName="deliveryTimeSpan">
+                        <option value="">select timespan</option>
+                        <option value="10 t0 15">10 t0 15</option>
+                        <option value="15 t0 30">15 to 30</option>
+                    </select>
+                </div>
+                
+            </div>
+          <div>
+            <button class="btn btn-danger">Submit</button>
+          </div>
+         </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closemodal()">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
